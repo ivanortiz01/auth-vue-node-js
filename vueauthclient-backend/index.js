@@ -25,6 +25,7 @@ passport.use(new LocalStrategy(
         })
 
         if (user) {
+            console.log(["Login:", user]);
             done(null, user);
         } else {
             done(null, false, { message: 'Incorrect username or password'});
@@ -33,14 +34,16 @@ passport.use(new LocalStrategy(
 ));
 
 passport.serializeUser((user, done) => {
+    console.log(["serializeUser:", user]);
     done(null, user.id);
 })
 
 passport.deserializeUser((id, done) => {
     let user = users.find((user) => {
-        return user.id = id
+        return user.id === id
     })
 
+    console.log(["deserializeUser:", id, user]);
     done(null, user);
 })
 
@@ -92,7 +95,7 @@ app.get("/api/user", authMiddleware, (req, res) => {
     let user = users.find(user => {
         return user.id === req.session.passport.user
     });
- 
+    
     console.log([user, req.session]);
 
     res.send({ user: user });

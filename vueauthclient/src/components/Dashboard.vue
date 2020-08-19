@@ -24,7 +24,7 @@ export default {
       axios
         .get('/api/user')
         .then((res) => {
-          console.log(res)
+          console.log(res.data)
           self.$set(this, 'user', res.data.user)
         })
         .catch((err) => {
